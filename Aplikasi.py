@@ -17,7 +17,7 @@ engineSize = st.number_input('Input Engine Size Mobil')
 
 predict = ' '
 
-locale.setlocale(locale.LC_ALL, 'id_ID') 
+locale.setlocale(locale.LC_ALL, 'en_US')  # Mengatur pengaturan lokal menjadi 'en_US'
 
 if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     if year == 0 or mileage == 0 or tax == 0 or mpg == 0 or engineSize == 0:
