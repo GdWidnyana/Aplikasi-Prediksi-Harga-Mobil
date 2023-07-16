@@ -17,7 +17,7 @@ engineSize = st.number_input('Input Engine Size Mobil')
 
 predict = ' '
 
-locale.setlocale(locale.LC_ALL, 'en_US')  # Mengatur pengaturan lokal menjadi 'en_US'
+locale.setlocale(locale.LC_ALL, 'id_ID')
 
 if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     if year == 0 or mileage == 0 or tax == 0 or mpg == 0 or engineSize == 0:
@@ -25,6 +25,7 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     else:
         with st.empty():
             st.info("Sedang memproses prediksi...")
+
             with st.spinner():
                 time.sleep(2)  
             st.success("Selesai!")
@@ -38,7 +39,7 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
 
         formatted_price = locale.format_string("%.0f", predicted_price_in_rupiah, grouping=True)
         st.success(f"Kesimpulan: Harga mobil bekas berdasarkan data di atas adalah Rp {formatted_price}.")
-        st.experimental_rainbow()  # Mengganti st.snow() menjadi st.experimental_rainbow()
+        st.snow()
 
 st.image('mobil.png', use_column_width=True)
 
@@ -56,4 +57,4 @@ def add_bg_from_url():
          unsafe_allow_html=True
      )
 
-add_bg_from_url()
+add_bg_from_url(); 
