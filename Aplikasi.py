@@ -17,7 +17,7 @@ engineSize = st.number_input('Input Engine Size Mobil')
 
 predict = ' '
 
-locale.setlocale(locale.LC_ALL, 'id_ID')
+locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
 
 if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     if year == 0 or mileage == 0 or tax == 0 or mpg == 0 or engineSize == 0:
@@ -25,7 +25,6 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     else:
         with st.empty():
             st.info("Sedang memproses prediksi...")
-
             with st.spinner():
                 time.sleep(2)  
             st.success("Selesai!")
@@ -57,4 +56,4 @@ def add_bg_from_url():
          unsafe_allow_html=True
      )
 
-add_bg_from_url(); 
+add_bg_from_url()
