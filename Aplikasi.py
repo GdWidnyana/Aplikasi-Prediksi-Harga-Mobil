@@ -15,7 +15,7 @@ tax = st.number_input('Input Pajak Mobil')
 mpg = st.number_input('Input Konsumsi BBM Mobil')
 engineSize = st.number_input('Input Engine Size Mobil')
 
-predict = ' '
+predict = None
 
 locale.setlocale(locale.LC_ALL, 'id_ID')
 
@@ -31,30 +31,15 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
             st.success("Selesai!")
             time.sleep(1) 
 
-        predict = model.predict([[year, mileage, tax, mpg, engineSize]])
-        predicted_price_in_rupiah = predict * 19000
+        try:
+            predict = model.predict([[year, mileage, tax, mpg, engineSize]])
+            predicted_price_in_rupiah = predict[0] * 19000
 
-        st.write('Prediksi Harga Mobil Bekas dalam EURO adalah', predict)
-        st.write('Prediksi Harga Mobil Bekas dalam Rupiah adalah', predicted_price_in_rupiah)
+            st.write('Prediksi Harga Mobil Bekas dalam EURO adalah', predict[0])
+            st.write('Prediksi Harga Mobil Bekas dalam Rupiah adalah', predicted_price_in_rupiah)
 
-        formatted_price = locale.format_string("%.0f", predicted_price_in_rupiah, grouping=True)
-        st.success(f"Kesimpulan: Harga mobil bekas berdasarkan data di atas adalah Rp {formatted_price}.")
-        st.snow()
-
-st.image('mobil.png', use_column_width=True)
-
-def add_bg_from_url():
-    st.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background-image: url("https://wallpapertag.com/wallpaper/middle/8/0/1/350871-website-background-1920x1200-high-resolution.jpg");
-             background-attachment: fixed;
-             background-size: cover
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
-
-add_bg_from_url(); 
+            formatted_price = locale.format_string("%.0f", predicted_price_in_rupiah, grouping=True)
+            st.success(f"Kesimpulan: Harga mobil bekas berdasarkan data di atas adalah Rp {formatted_price}.")
+        except Exception as e:
+            st.error("Terjadi kesalahan saat melakukan prediksi.")
+            st.error(f"Detail error: {e}")
