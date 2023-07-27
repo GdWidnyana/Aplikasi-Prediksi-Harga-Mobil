@@ -9,9 +9,9 @@ st.title('Aplikasi Prediksi Harga Mobil Bekas')
 st.image('mobil.png', use_column_width=True)
 
 year = st.number_input('Input Tahun Keluaran Mobil', min_value=0, step=1, format="%d")
-mileage = st.number_input('Input Jarak Tempuh Mobil')
-tax = st.number_input('Input Pajak Mobil')
-mpg = st.number_input('Input Konsumsi BBM Mobil')
+mileage = st.number_input('Input Jarak Tempuh Mobil (Kilometer)')
+tax = st.number_input('Input Biaya Pajak Mobil (Euro)')
+mpg = st.number_input('Input Konsumsi BBM Mobil (Liter)')
 engineSize = st.number_input('Input Engine Size Mobil')
 
 predict = ' '
