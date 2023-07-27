@@ -38,9 +38,9 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
             time.sleep(1)
 
         predict = model.predict([[year, mileage, tax, mpg, engineSize]])
-        predicted_price_in_rupiah = predict[0] * 16741  # Assuming predict is a 1D array with a single value
+        predicted_price_in_rupiah = predict.item(0) * 16741  # Extract the single value as a regular float
 
-        st.write('Prediksi Harga Mobil Bekas dalam EURO adalah', predict[0])
+        st.write('Prediksi Harga Mobil Bekas dalam EURO adalah', predict.item(0))
         st.write('Prediksi Harga Mobil Bekas dalam Rupiah adalah', predicted_price_in_rupiah)
 
         formatted_price = "{:,.0f}".format(predicted_price_in_rupiah)
