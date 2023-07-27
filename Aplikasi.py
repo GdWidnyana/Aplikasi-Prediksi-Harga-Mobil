@@ -17,11 +17,14 @@ engineSize = st.number_input('Input Engine Size Mobil')
 
 predict = ' '
 
-# Set the locale to 'id' (Indonesian) if available
+# Set the locale to 'id' (Indonesian) if available, else set fallback to 'id_ID'
 try:
     locale.setlocale(locale.LC_ALL, 'id')
 except locale.Error:
-    st.warning("Locale 'id' is not available. Number formatting may not be in Indonesian style.")
+    try:
+        locale.setlocale(locale.LC_ALL, 'id_ID')
+    except locale.Error:
+        st.warning("Locale 'id' and 'id_ID' are not available. Number formatting may not be in Indonesian style.")
 
 if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     if year == 0 or mileage == 0 or tax == 0 or mpg == 0 or engineSize == 0:
