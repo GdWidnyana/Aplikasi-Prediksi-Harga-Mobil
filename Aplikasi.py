@@ -2,6 +2,8 @@ import pickle
 import streamlit as st
 import time
 
+st.set_page_config(page_title="WebApp Prediksi Harga Mobil", page_icon="🚗")
+
 model = pickle.load(open('prediksi_hargamobil.sav', 'rb'))
 
 st.title('Aplikasi Prediksi Harga Mobil Bekas')
