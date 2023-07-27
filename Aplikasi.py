@@ -38,6 +38,7 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
 
         formatted_price = format_number_with_commas(predicted_price_in_rupiah)
         st.success(f"Kesimpulan: Harga mobil bekas berdasarkan data di atas adalah Rp {formatted_price}.")
+        st.snow()
 
 st.image('mobil.png', use_column_width=True)
 
