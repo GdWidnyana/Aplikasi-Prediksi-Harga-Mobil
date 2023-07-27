@@ -1,6 +1,5 @@
 import pickle
 import streamlit as st
-import locale
 import time
 
 model = pickle.load(open('prediksi_hargamobil.sav', 'rb'))
@@ -17,14 +16,8 @@ engineSize = st.number_input('Input Engine Size Mobil')
 
 predict = ' '
 
-# Set the locale to 'id' (Indonesian) if available, else set fallback to 'id_ID'
-try:
-    locale.setlocale(locale.LC_ALL, 'id')
-except locale.Error:
-    try:
-        locale.setlocale(locale.LC_ALL, 'id_ID')
-    except locale.Error:
-        st.warning("Locale 'id' and 'id_ID' are not available. Number formatting may not be in Indonesian style.")
+def format_number_with_commas(number):
+    return "{:,.0f}".format(number).replace(",", ".")
 
 if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
     if year == 0 or mileage == 0 or tax == 0 or mpg == 0 or engineSize == 0:
@@ -38,12 +31,12 @@ if st.button('Prediksi Harga Mobil Bekas', key='predict_button'):
             time.sleep(1)
 
         predict = model.predict([[year, mileage, tax, mpg, engineSize]])
-        predicted_price_in_rupiah = predict.item(0) * 16741  # Extract the single value as a regular float
+        predicted_price_in_rupiah = predict[0] * 16741  # Assuming predict is a 1D array with a single value
 
-        st.write('Prediksi Harga Mobil Bekas dalam EURO adalah', predict.item(0))
+        st.write('Prediksi Harga Mobil Bekas dalam EURO adalah', predict[0])
         st.write('Prediksi Harga Mobil Bekas dalam Rupiah adalah', predicted_price_in_rupiah)
 
-        formatted_price = "{:,.0f}".format(predicted_price_in_rupiah)
+        formatted_price = format_number_with_commas(predicted_price_in_rupiah)
         st.success(f"Kesimpulan: Harga mobil bekas berdasarkan data di atas adalah Rp {formatted_price}.")
 
 st.image('mobil.png', use_column_width=True)
