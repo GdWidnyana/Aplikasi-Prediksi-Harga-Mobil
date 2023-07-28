@@ -52,7 +52,7 @@ def add_bg_from_url():
          f"""
          <style>
          .stApp {{
-             background-image: url("https://cutewallpaper.org/27/blue-black-hd-high-res-wallpaper/170426645.jpg");
+             background-image: url("https://images.unsplash.com/photo-1483401757487-2ced3fa77952?ixlib=rb-4.0.3");
              background-attachment: fixed;
              background-size: cover;
          }}
