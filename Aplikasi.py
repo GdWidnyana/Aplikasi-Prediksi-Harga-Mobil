@@ -16,8 +16,6 @@ tax = st.number_input('Input Biaya Pajak Mobil (Euro)')
 mpg = st.number_input('Input Konsumsi BBM Mobil (Liter)')
 engineSize = st.number_input('Input Engine Size Mobil')
 
-predict = ' '
-
 def format_number_with_dots(number):
     # Convert the number to an integer to remove decimal digits
     integer_value = int(number)
