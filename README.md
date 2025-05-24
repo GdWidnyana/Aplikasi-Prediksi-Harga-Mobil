@@ -64,6 +64,36 @@ Penjelasan fitur/kolom pada kedua dataset:
 * **title**: judul film
 * **genres**: genre film
 
+Pada proyek sistem rekomendasi film ini, digunakan dua metode utama, yaitu **Content-Based Filtering** dan **Collaborative Filtering (User-Based)**. Masing-masing metode memanfaatkan fitur yang berbeda sesuai dengan pendekatannya.
+
+### 1. Content-Based Filtering
+
+Metode ini menggunakan fitur-fitur yang berasal langsung dari atribut film untuk membangun model rekomendasi. Fitur utama yang digunakan adalah:
+
+- **Genres (Genre Film)**  
+  Genre film seperti Adventure, Animation, Comedy, Fantasy, dan lain-lain menjadi fitur utama. Genre ini diolah menjadi representasi numerik melalui teknik representasi vektor untuk menghitung kemiripan antar film.
+
+- **Title (Judul Film)**  
+  Judul film digunakan sebagai indeks untuk pencarian dan pemetaan ke vektor fitur.
+
+**Cara Kerja:**  
+Setiap film direpresentasikan sebagai vektor fitur berdasarkan genre atau deskripsi filmnya. Kemiripan antar film dihitung menggunakan cosine similarity antara vektor-vektor tersebut. Film-film yang memiliki skor kemiripan tinggi akan direkomendasikan.
+
+### 2. Collaborative Filtering (User-Based)
+
+Metode ini menggunakan data interaksi pengguna (rating) terhadap film untuk merekomendasikan film baru. Fitur utama yang digunakan adalah:
+
+- **User-Item Rating Matrix**  
+  Matriks dua dimensi yang berisi rating dari setiap user terhadap film yang sudah ditonton. Baris adalah `userId`, kolom adalah `movieId`, dan nilai adalah rating (skala 1 sampai 5).
+
+- **User Similarity**  
+  Kemiripan antar pengguna dihitung berdasarkan pola rating mereka menggunakan cosine similarity. Pengguna yang memiliki pola rating mirip dianggap memiliki preferensi yang sama.
+
+**Cara Kerja:**  
+Sistem mencari pengguna-pengguna yang paling mirip dengan pengguna target berdasarkan kemiripan rating. Rekomendasi film dibuat dari film-film yang belum ditonton oleh pengguna target tapi diberi rating tinggi oleh pengguna mirip.
+
+---
+
 ### Exploratory Data Analysis (EDA)
 
 Untuk memahami struktur dan karakteristik data, dilakukan beberapa tahap eksplorasi visual dan analisis sebagai berikut:
@@ -147,7 +177,7 @@ CBF adalah metode sistem rekomendasi yang merekomendasikan item kepada pengguna 
 
 #### Parameter dan Cara Kerja:
 
-* **Fitur yang digunakan**: `genres` dari setiap film, diproses menggunakan teknik TF-IDF.
+* **Fitur yang digunakan**: `genres` dari setiap film, diproses dari dataset
 * **Fungsi kemiripan**: `cosine_similarity` dari `sklearn`, menghitung kemiripan antara dua vektor genre.
 * **Top-N**: jumlah rekomendasi yang diambil, dalam kasus ini `top_n=10`.
 * **Algoritma rekomendasi**:
@@ -255,6 +285,41 @@ Hasil evaluasi untuk 50 pengguna: **Precision\@10 = 0.190**
 Berdasarkan hasil evaluasi, model Collaborative Filtering menghasilkan performa yang **lebih baik** (Precision\@10 = 0.190) dibanding Content-Based Filtering (Precision\@10 = 0.072). Hal ini menunjukkan bahwa memanfaatkan informasi preferensi antar pengguna (kolaboratif) memberikan hasil rekomendasi yang lebih akurat dalam kasus ini.
 
 
+## 📋 Hasil Rekomendasi Top-N
+
+Berikut ini adalah contoh hasil rekomendasi **Top-10** untuk film *"Toy Story (1995)"* berdasarkan masing-masing metode:
+
+### 🎬 Content-Based Filtering
+
+| No | Judul Film                                              | Genre                                           | Nilai Kemiripan |
+| -- | ------------------------------------------------------- | ----------------------------------------------- | --------------- |
+| 1  | Antz (1998)                                             | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 2  | Toy Story 2 (1999)                                      | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 3  | Adventures of Rocky and Bullwinkle, The (2000)          | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 4  | Emperor's New Groove, The (2000)                        | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 5  | Monsters, Inc. (2001)                                   | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 6  | DuckTales: The Movie - Treasure of the Lost Lamp (1990) | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 7  | Wild, The (2006)                                        | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 8  | Shrek the Third (2007)                                  | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 9  | Tale of Despereaux, The (2008)                          | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+| 10 | Asterix and the Vikings (2006)                          | Adventure, Animation, Children, Comedy, Fantasy | 1.0             |
+
+### 🤝 User-Based Collaborative Filtering
+
+| No | Judul Film                                                    | Genre                                           |
+| -- | ------------------------------------------------------------- | ----------------------------------------------- |
+| 1  | Toy Story (1995)                                              | Adventure, Animation, Children, Comedy, Fantasy |
+| 2  | Dumb & Dumber (Dumb and Dumber) (1994)                        | Adventure, Comedy                               |
+| 3  | Lion King, The (1994)                                         | Adventure, Animation, Children, Drama, Musical  |
+| 4  | Indiana Jones and the Last Crusade (1989)                     | Action, Adventure                               |
+| 5  | Good Will Hunting (1997)                                      | Drama, Romance                                  |
+| 6  | Green Mile, The (1999)                                        | Crime, Drama                                    |
+| 7  | X-Men (2000)                                                  | Action, Adventure, Sci-Fi                       |
+| 8  | Memento (2000)                                                | Mystery, Thriller                               |
+| 9  | Finding Nemo (2003)                                           | Adventure, Animation, Children, Comedy          |
+| 10 | Pirates of the Caribbean: The Curse of the Black Pearl (2003) | Action, Adventure, Comedy, Fantasy              |
+
+
 ## 📊 Evaluasi Model
 
 ### Metrik Evaluasi yang Digunakan: Precision\@K
@@ -318,7 +383,6 @@ Model user-based collaborative filtering memiliki performa yang **lebih baik dan
 
 ---
 
-
 # **ANALISIS HASIL DUA METODE**
 ## Perbandingan Hasil Rekomendasi: Content-Based Filtering vs Collaborative Filtering
 
@@ -364,5 +428,3 @@ Pemilihan metode rekomendasi tergantung pada tujuan sistem:
 - Jika fokus utama adalah mencari film dengan karakteristik serupa berdasarkan atribut konten, maka Content-Based Filtering lebih tepat digunakan.
 
 - Jika tujuan utama adalah memberikan rekomendasi yang personal dan beragam berdasarkan preferensi pengguna, Collaborative Filtering lebih direkomendasikan.
-
-
